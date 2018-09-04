@@ -1,0 +1,4 @@
+
+3.9.18
+Add test to cantAttack();
+Add test to bishop movement
