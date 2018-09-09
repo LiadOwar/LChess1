@@ -1,0 +1,15 @@
+
+<p>
+  {{title}}
+</p>
+
+<h1>
+  "h1" {{result}}
+</h1>
+<button (click) ="getResult()"></button>
+<div *ngFor = "let post of results | async">
+  {{post}}
+</div>
+<div >
+  {{post | json}}
+</div>

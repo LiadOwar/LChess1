@@ -6,6 +6,7 @@ import com.lchess.engine.piece.model.pojo.PieceMovementPath;
 import com.lchess.engine.piece.services.PieceMovementManager;
 import com.lchess.engine.piece.services.PieceMovementManagerImpl;
 import com.lchess.engine.piece.view.PieceColorEnum;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 /**
  * Created by liad on 31/08/2018.
  */
+@Component
 public class BoardManager {
 
     private static HashMap<Position, Integer> positionIntegerHashMap = new HashMap<>();

@@ -1,4 +1,4 @@
-package com.lchess.game;
+package com.lchess;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
