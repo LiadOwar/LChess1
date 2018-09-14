@@ -15,6 +15,9 @@ public class Position {
     public Position(char a, Integer i){
         this.coordinate = new ChessCoordinate(a, i );
     }
+    public Position(String a, String i){
+        this.coordinate = new ChessCoordinate(a.charAt(0), Integer.parseInt(i));
+    }
 
     public ChessCoordinate getPosition() {
         return coordinate;
@@ -23,6 +26,9 @@ public class Position {
     public void setCoordinate(char a, Integer i){
         this.coordinate.setXPos(a);
         this.coordinate.setYPos(i);
+    }
+
+    public Position() {
     }
 
     @Override

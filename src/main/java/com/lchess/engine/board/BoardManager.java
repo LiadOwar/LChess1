@@ -6,6 +6,7 @@ import com.lchess.engine.piece.model.pojo.PieceMovementPath;
 import com.lchess.engine.piece.services.PieceMovementManager;
 import com.lchess.engine.piece.services.PieceMovementManagerImpl;
 import com.lchess.engine.piece.view.PieceColorEnum;
+import com.lchess.engine.piece.view.PieceTypeEnum;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -91,7 +92,14 @@ public class BoardManager {
         return positionIntegerHashMap.get(position);
     }
 
+    //TODO remove this
     public Tile getTileFromPosition(Board board, Position position){
+        Integer idx = positionIntegerHashMap.get(position);
+        Tile tile = board.getTiles()[idx];
+        return tile;
+    }
+
+    public Tile getTileFromPosition(Position position){
         Integer idx = positionIntegerHashMap.get(position);
         Tile tile = board.getTiles()[idx];
         return tile;
@@ -124,26 +132,77 @@ public class BoardManager {
             return false;
         }
         movePieceToDestination(originTile, pieceState, destinationTile);
+        if (pieceState.getPieceType() == PieceTypeEnum.PAWN){
+            PawnState pawnState = (PawnState)pieceState;
+            pawnState.setFirstMove(false);
+        }
         return true;
         }
 
     public boolean checkIfCanMoveToPosition(PieceMovementPath path, Position position) {
-        Position startPosition = path.getPathLastPosition(path);
+        Position startPosition = path.getPathStartingPosition(path);
 
         Tile startMovementTile = getTileFromPosition(board, startPosition);
         PieceState startPieceState = startMovementTile.getPieceState();
-
         Tile destinationTile = getTileFromPosition(board, position);
         PieceState destinationPieceState = destinationTile.getPieceState();
 
+        if (!validatePawnMove(path, startPieceState, destinationTile, destinationPieceState))
+        {
+            return false;
+        }
+
         if (destinationPieceState != null){
             if (canAttack(startPieceState, destinationPieceState)){
-                attack(startMovementTile, startPieceState, destinationTile);
+
                 return true;
             }
+            else {
+                return false;
+            }
         }
-        return false;
+        return true;
 
+    }
+
+    private boolean validatePawnMove(PieceMovementPath path, PieceState startPieceState, Tile destinationTile, PieceState destinationPieceState) {
+        if (startPieceState.getPieceType() == PieceTypeEnum.PAWN){
+            PieceColorEnum color = startPieceState.getColor();
+            Position position = destinationTile.getPosition();
+            char xPos = position.getPosition().getxPos();
+            char borderedXpos = path.getPath().get(path.getPath().size() - 1).getPosition().getxPos();
+            Integer yPos = position.getPosition().getyPos();
+            Integer borderedYpos = path.getPath().get(path.getPath().size() - 1).getPosition().getyPos();
+            if (destinationPieceState != null){
+
+
+                if (xPos == borderedXpos){
+                    System.out.println("PAWN cannot attack forward");
+                    return false;
+                }
+                else if (canAttack(startPieceState, destinationPieceState)){
+                    switch (color) {
+                        case WHITE:
+                            if ((xPos == borderedXpos + 1 && yPos == borderedYpos + 1) || (xPos == borderedXpos - 1 && yPos == borderedYpos + 1)){
+                                return true;
+                            }
+                            break;
+                        case BLACK:
+                            if ((xPos == borderedXpos + 1 && yPos == borderedYpos - 1) || (xPos == borderedXpos - 1 && yPos == borderedYpos - 1)){
+                                return true;
+                            }
+                            break;
+                    }
+                    return false;
+                }
+            }
+            if (xPos != borderedXpos){
+                System.out.println("PAWN cannot move diagonally without attack");
+                return false;
+            }
+
+        }
+        return true;
     }
 
     private void attack(Tile startMovementTile, PieceState startPieceState, Tile destinationTile) {
@@ -238,6 +297,7 @@ public class BoardManager {
 
     private static void movePieceToDestination(Tile originTile, PieceState pieceState, Tile destinationTile) {
 
+        originTile.setPieceState(null);
         originTile.setOccupide(false);
         destinationTile.setOccupide(true);
         destinationTile.setPieceState(pieceState);

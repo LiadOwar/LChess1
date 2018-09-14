@@ -24,20 +24,76 @@ public class PawnModel extends PieceModel {
 
     private PieceMovementInfo getPawnGeneralAllowableMoves(Position origin, PawnState pawnState) {
         PieceMovementInfo ret = new PieceMovementInfo();
-        PieceMovementPath path1 = new PieceMovementPath(origin);
+        generateMoveForward1Path(origin , pawnState, ret);
+        generateMoveForward2Path(origin , pawnState, ret);
+        generateMoveAttackLeftPath(origin , pawnState, ret);
+        generateMoveAttackRightPath(origin , pawnState, ret);
 
-        Position tempPosition = PieceMovmentUtils.moveForward(origin, pawnState.getColor(), 1);
-        pathManager.tryAddPositionToPath(path1, tempPosition);
-        ret.tryAddPath(path1);
-
-        if(pawnState.getFirstMove()){
-            PieceMovementPath path2 = new PieceMovementPath(origin);
-            for (int i = 0 ; i < 2 ; i++){
-                tempPosition = PieceMovmentUtils.moveForward(origin, pawnState.getColor(), i + 1);
-                pathManager.tryAddPositionToPath(path2, tempPosition);
-            }
-            ret.tryAddPath(path2);
-        }
         return ret;
     }
+    private void generateMoveForward1Path(Position origin, PawnState pawnState, PieceMovementInfo ret) {
+
+        PieceMovementPath tempPath = new PieceMovementPath(origin);
+        char tempXpos = origin.getPosition().getxPos();
+        int tempYpos = origin.getPosition().getyPos();
+        Position currentPosition = new Position(tempXpos, tempYpos);
+
+        currentPosition  = PieceMovmentUtils.moveForward(currentPosition, pawnState.getColor(), 1);
+        if (!pathManager.tryAddPositionToPath(tempPath, currentPosition)){
+            return;
+        }
+
+        ret.tryAddPath(tempPath);
+    }
+
+    private void generateMoveForward2Path(Position origin, PawnState pawnState, PieceMovementInfo ret) {
+        if (!pawnState.getFirstMove()){
+            return;
+        }
+        for (int i =0 ; i < 2; i++){
+            PieceMovementPath tempPath = new PieceMovementPath(origin);
+            char tempXpos = origin.getPosition().getxPos();
+            int tempYpos = origin.getPosition().getyPos();
+            Position currentPosition = new Position(tempXpos, tempYpos);
+
+            for (int j = 0 ; j <= i ; j++){
+                currentPosition  = PieceMovmentUtils.moveForward(currentPosition, pawnState.getColor(), 1);
+                if (!pathManager.tryAddPositionToPath(tempPath, currentPosition)){
+                    return;
+                }
+            }
+            ret.tryAddPath(tempPath);
+        }
+    }
+
+    private void generateMoveAttackRightPath(Position origin, PawnState pawnState, PieceMovementInfo ret) {
+
+        PieceMovementPath tempPath = new PieceMovementPath(origin);
+        char tempXpos = origin.getPosition().getxPos();
+        int tempYpos = origin.getPosition().getyPos();
+        Position currentPosition = new Position(tempXpos, tempYpos);
+
+        currentPosition  = PieceMovmentUtils.moveDiagonalUpRight(currentPosition, pawnState.getColor(), 1);
+        if (!pathManager.tryAddPositionToPath(tempPath, currentPosition)){
+            return;
+        }
+
+        ret.tryAddPath(tempPath);
+    }
+
+    private void generateMoveAttackLeftPath(Position origin, PawnState pawnState, PieceMovementInfo ret) {
+
+        PieceMovementPath tempPath = new PieceMovementPath(origin);
+        char tempXpos = origin.getPosition().getxPos();
+        int tempYpos = origin.getPosition().getyPos();
+        Position currentPosition = new Position(tempXpos, tempYpos);
+
+        currentPosition  = PieceMovmentUtils.moveDiagonalUpLeft(currentPosition, pawnState.getColor(), 1);
+        if (!pathManager.tryAddPositionToPath(tempPath, currentPosition)){
+            return;
+        }
+
+        ret.tryAddPath(tempPath);
+    }
+
 }

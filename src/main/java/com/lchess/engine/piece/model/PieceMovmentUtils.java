@@ -39,6 +39,72 @@ public class PieceMovmentUtils {
 
             case BLACK:
                 yPos -= numMoves;
+                xPos += numMoves;
+                break;
+            default:
+                break;
+        }
+        ChessCoordinate updatedCoordinate = new ChessCoordinate(xPos, yPos);
+        ret = new Position(updatedCoordinate);
+        return ret;
+    }
+
+    public static Position moveDiagonalDownLeft(Position origin, PieceColorEnum colorEnum, int numMoves){
+        Position ret;
+        char xPos = origin.getPosition().getxPos();
+        int yPos = origin.getPosition().getyPos();
+        switch (colorEnum){
+            case WHITE:
+                yPos -= numMoves;
+                xPos -= numMoves;
+                break;
+
+            case BLACK:
+                yPos += numMoves;
+                xPos += numMoves;
+                break;
+            default:
+                break;
+        }
+        ChessCoordinate updatedCoordinate = new ChessCoordinate(xPos, yPos);
+        ret = new Position(updatedCoordinate);
+        return ret;
+    }
+
+    public static Position moveDiagonalDownRight(Position origin, PieceColorEnum colorEnum, int numMoves) {
+        Position ret;
+        char xPos = origin.getPosition().getxPos();
+        int yPos = origin.getPosition().getyPos();
+        switch (colorEnum){
+            case WHITE:
+                yPos -= numMoves;
+                xPos += numMoves;
+                break;
+
+            case BLACK:
+                yPos += numMoves;
+                xPos -= numMoves;
+                break;
+            default:
+                break;
+        }
+        ChessCoordinate updatedCoordinate = new ChessCoordinate(xPos, yPos);
+        ret = new Position(updatedCoordinate);
+        return ret;
+    }
+
+    public static Position moveDiagonalUpRight(Position origin, PieceColorEnum colorEnum, int numMoves) {
+        Position ret;
+        char xPos = origin.getPosition().getxPos();
+        int yPos = origin.getPosition().getyPos();
+        switch (colorEnum){
+            case WHITE:
+                yPos += numMoves;
+                xPos += numMoves;
+                break;
+
+            case BLACK:
+                yPos -= numMoves;
                 xPos -= numMoves;
                 break;
             default:

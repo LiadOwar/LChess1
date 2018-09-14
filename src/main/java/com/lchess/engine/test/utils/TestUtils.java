@@ -8,6 +8,9 @@ import com.lchess.engine.piece.model.PieceState;
 import com.lchess.engine.piece.model.pojo.PieceMovementInfo;
 import com.lchess.engine.piece.model.pojo.PieceMovementPath;
 import com.lchess.engine.piece.view.PieceColorEnum;
+import com.lchess.game.Game;
+import com.lchess.game.GameImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +21,9 @@ import java.util.Set;
  */
 public class TestUtils {
     private static  Logger logger;
-    static BoardManager  boardManager = BoardManager.getInstanse();
+    private static Game game = new GameImpl();
+
+    private static BoardManager boardManager = game.getBoardManager();
 
     public static PieceMovementPath generatePath(Position[] positions){
         PieceMovementPath ret = new PieceMovementPath(positions[0]);
@@ -150,6 +155,18 @@ public class TestUtils {
             Position position = new Position(xPos, yPos);
             expectedInitBoardPositionMap.put(position, new PawnState(PieceColorEnum.BLACK));
         }
+    }
+
+    public static void movePieceDebug(Game game, Position origin, Position destination) {
+
+
+        Tile originTile = game.getBoardManager().getTileFromPosition(origin);
+        Tile destTile = game.getBoardManager().getTileFromPosition(destination);
+        PieceState originPieceState = originTile.getPieceState();
+        destTile.setPieceState(originPieceState);
+        destTile.setOccupide(true);
+        originTile.setPieceState(null);
+        originTile.setOccupide(false);
     }
 
 

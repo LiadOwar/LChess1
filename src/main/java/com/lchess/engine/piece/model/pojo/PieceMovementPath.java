@@ -30,6 +30,11 @@ public class PieceMovementPath {
         return position;
     }
 
+    public Position getPathStartingPosition(PieceMovementPath pieceMovementPath){
+        Position position = path.get(0);
+        return position;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

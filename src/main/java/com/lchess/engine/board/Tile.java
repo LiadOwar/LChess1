@@ -33,7 +33,6 @@ public class Tile {
 
     public void setOccupide(Boolean occupide) {
         isOccupide = occupide;
-        this.pieceState = null;
     }
 
     public PieceState getPieceState() {

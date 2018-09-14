@@ -15,14 +15,16 @@ public class PathManagerImpl implements PathManager {
     }
 
     @Override
-    public void tryAddPositionToPath(PieceMovementPath pieceMovementPath, Position position) {
+    public Boolean tryAddPositionToPath(PieceMovementPath pieceMovementPath, Position position) {
         if (BoardUtils.isOutOfBoard(position)) {
-            return;
+            return false;
 
         }
         if (boardManager.checkIfCanMoveToPosition(pieceMovementPath, position)) {
             pieceMovementPath.addPositionToPath(position);
+            return true;
         }
+        return false;
 
     }
 }

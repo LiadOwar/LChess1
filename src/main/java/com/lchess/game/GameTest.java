@@ -15,10 +15,13 @@ import java.util.HashMap;
 /**
  * Created by liad on 01/09/2018.
  */
+
 public class GameTest {
     private static BoardManager boardManager = BoardManager.getInstanse();
 
     private static Logger logger = new Logger();
+
+  private static Game game = new GameImpl();
 
     private static Boolean compareTileWithExpectation(Tile tile, HashMap<Position, PieceState> expectedInitBoardPositionMap){
         String methodName = "compareTileWithExpectation";
@@ -207,6 +210,112 @@ public class GameTest {
         printBoardDebug();
     }
 
+    private static  void tempMoveWhiteBishopDownLeftTest() {
+        String methodName = "tempMoveWhiteBishopDownLeftTest";
+        Game game = new GameImpl();
+        game.startGame();
+        Position origin = new Position('F', 1);
+        Position destination = new Position('C', 4);
+        Position origin2 = new Position('C', 4);
+        Position destination2 = new Position('B', 3);
+        Position whitePawnOrigin = new Position('E', 2);
+        Position whitePawnDest = new Position('E', 3);
+        Position blackPawnOrigin = new Position('B', 7);
+        Position blackPawnDest = new Position('B', 5);
+        Position blackPawnOrigin2 = new Position('B', 5);
+        Position blackPawnDest2 = new Position('B', 4);
+        game.movePiece(whitePawnOrigin, whitePawnDest);
+        game.movePiece(blackPawnOrigin, blackPawnDest);
+        game.movePiece(origin, destination);
+        game.movePiece(blackPawnOrigin2, blackPawnDest2);
+        game.movePiece(origin2, destination2);
+        HashMap<Position, PieceState> expectedBoardPositionMap = TestUtils.getExpectedInitBoardPositionsMap();
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, whitePawnOrigin,whitePawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin,blackPawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, origin, destination);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin2, blackPawnDest2);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, origin2,destination2);
+
+        if (isBoardMetExpectaions(methodName, expectedBoardPositionMap)){
+            logger.printTestPass(methodName);
+        }
+        else {
+            logger.printTestFailed(methodName, String.format("tile on board not as expected: expect [%s] actual [%s]", destination2, boardManager.getTileFromPosition(destination2).getPosition())  );
+        }
+        printBoardDebug();
+    }
+
+    private static  void tempMoveWhiteBishopDownRightTest() {
+        String methodName = "tempMoveWhiteBishopDownRightTest";
+        Game game = new GameImpl();
+        game.startGame();
+        Position origin = new Position('F', 1);
+        Position destination = new Position('C', 4);
+        Position origin2 = new Position('C', 4);
+        Position destination2 = new Position('D', 3);
+        Position whitePawnOrigin = new Position('E', 2);
+        Position whitePawnDest = new Position('E', 3);
+        Position blackPawnOrigin = new Position('B', 7);
+        Position blackPawnDest = new Position('B', 5);
+        Position blackPawnOrigin2 = new Position('B', 5);
+        Position blackPawnDest2 = new Position('B', 4);
+        game.movePiece(whitePawnOrigin, whitePawnDest);
+        game.movePiece(blackPawnOrigin, blackPawnDest);
+        game.movePiece(origin, destination);
+        game.movePiece(blackPawnOrigin2, blackPawnDest2);
+        game.movePiece(origin2, destination2);
+        HashMap<Position, PieceState> expectedBoardPositionMap = TestUtils.getExpectedInitBoardPositionsMap();
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, whitePawnOrigin,whitePawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin,blackPawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, origin, destination);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin2, blackPawnDest2);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, origin2,destination2);
+
+        if (isBoardMetExpectaions(methodName, expectedBoardPositionMap)){
+            logger.printTestPass(methodName);
+        }
+        else {
+            logger.printTestFailed(methodName, String.format("tile on board not as expected: expect [%s] actual [%s]", destination2, boardManager.getTileFromPosition(destination2).getPosition())  );
+        }
+        printBoardDebug();
+    }
+
+    private static  void tempMoveWhiteBishopUpRightTest() {
+        String methodName = "tempMoveWhiteBishopDownRightTest";
+        Game game = new GameImpl();
+        game.startGame();
+        Position origin = new Position('F', 1);
+        Position destination = new Position('C', 4);
+        Position origin2 = new Position('C', 4);
+        Position destination2 = new Position('E', 6);
+        Position whitePawnOrigin = new Position('E', 2);
+        Position whitePawnDest = new Position('E', 3);
+        Position blackPawnOrigin = new Position('B', 7);
+        Position blackPawnDest = new Position('B', 5);
+        Position blackPawnOrigin2 = new Position('B', 5);
+        Position blackPawnDest2 = new Position('B', 4);
+        game.movePiece(whitePawnOrigin, whitePawnDest);
+        game.movePiece(blackPawnOrigin, blackPawnDest);
+        game.movePiece(origin, destination);
+        game.movePiece(blackPawnOrigin2, blackPawnDest2);
+        game.movePiece(origin2, destination2);
+        HashMap<Position, PieceState> expectedBoardPositionMap = TestUtils.getExpectedInitBoardPositionsMap();
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, whitePawnOrigin,whitePawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin,blackPawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, origin, destination);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin2, blackPawnDest2);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, origin2,destination2);
+
+        if (isBoardMetExpectaions(methodName, expectedBoardPositionMap)){
+            logger.printTestPass(methodName);
+        }
+        else {
+            logger.printTestFailed(methodName, String.format("tile on board not as expected: expect [%s] actual [%s]", destination2, boardManager.getTileFromPosition(destination2).getPosition())  );
+        }
+        printBoardDebug();
+    }
+
+
     private static void tempMoveWhiteBishop1UpLeftTest() {
         String methodName = "tempMoveWhiteBishop1UpLeftTest";
 
@@ -215,10 +324,16 @@ public class GameTest {
         Position origin = new Position('C', 1);
         Position destination = new Position('B', 2);
         Position expectedDestination = new Position('B', 2);
-        game.movePiece(new Position('B', 2), new Position('B', 3));
-        game.movePiece(new Position('B', 7), new Position('B', 5));
+        Position whitePawnOrigin = new Position('B', 2);
+        Position whitePawnDest = new Position('B', 3);
+        Position blackPawnOrigin = new Position('B', 7);
+        Position blackPawnDest = new Position('B', 5);
+        game.movePiece(whitePawnOrigin, whitePawnDest);
+        game.movePiece(blackPawnOrigin, blackPawnDest);
         game.movePiece(origin, destination);
         HashMap<Position, PieceState> expectedBoardPositionMap = TestUtils.getExpectedInitBoardPositionsMap();
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, whitePawnOrigin,whitePawnDest);
+        TestUtils.setExpectedPosition(expectedBoardPositionMap, blackPawnOrigin,blackPawnDest);
         TestUtils.setExpectedPosition(expectedBoardPositionMap, origin, expectedDestination);
 
         if (isBoardMetExpectaions(methodName, expectedBoardPositionMap)){
@@ -236,15 +351,19 @@ public class GameTest {
     }
 
     public static void main(String[] args){
-        startGameTest();
-        getInitialTurnTest();
-        getTurnOnLegalMoveTest();
-        getTurnOnIllegalMoveTest();
-        moveBlackPawnOnWhitesTurnTest();
-        positionOfIllegalTurnMovePieceTest();
-        positionOfIllegalMovePieceTest();
-        tempMoveWhiteBishopTest();
-        tempMoveWhiteBishop1UpLeftTest();
+//        startGameTest();
+//        getInitialTurnTest();
+//        getTurnOnLegalMoveTest();
+//        getTurnOnIllegalMoveTest();
+//        moveBlackPawnOnWhitesTurnTest();
+//        positionOfIllegalTurnMovePieceTest();
+//        positionOfIllegalMovePieceTest();
+//        tempMoveWhiteBishopTest();
+//        tempMoveWhiteBishop1UpLeftTest();
+
+        tempMoveWhiteBishopDownLeftTest();
+        tempMoveWhiteBishopDownRightTest();
+        tempMoveWhiteBishopUpRightTest();
 
     }
 }

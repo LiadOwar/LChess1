@@ -5,6 +5,7 @@ import com.lchess.engine.board.Tile;
 import com.lchess.engine.piece.model.PieceState;
 import com.lchess.engine.piece.view.PieceColorEnum;
 import com.lchess.engine.piece.view.PieceTypeEnum;
+import com.lchess.game.Game;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,11 @@ public class ConsoleUI extends UI {
             System.out.print(String.format(" %c ",('A' + i)));
         }
         System.out.println("");
+    }
+
+    @Override
+    public PieceColorEnum getTurn(Game game) {
+        return game.getCurrentTurn();
     }
 
     public String representBoard(Board board) {
